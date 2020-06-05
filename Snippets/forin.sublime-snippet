@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+{% for $1 in $1s %}
+	$0
+{% endfor %}
+]]></content>
+	<tabTrigger>forin</tabTrigger>
+	<scope>source.tera</scope>
+</snippet>

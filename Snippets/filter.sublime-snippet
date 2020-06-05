@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+{% filter $1 %}$0{% endfilter %}
+]]></content>
+	<tabTrigger>filter</tabTrigger>
+	<scope>source.tera</scope>
+</snippet>

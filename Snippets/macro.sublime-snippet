@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+{% macro $1${2:($3)} %}
+	$0
+{% endmacro $1 %}$0
+]]></content>
+	<tabTrigger>macro</tabTrigger>
+	<scope>source.tera</scope>
+</snippet>

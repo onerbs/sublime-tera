@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+{% raw %}$0{% endraw %}
+]]></content>
+	<tabTrigger>raw</tabTrigger>
+	<scope>source.tera</scope>
+</snippet>
