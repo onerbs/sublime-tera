@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+name: Tera
+scope: source.tera
+file_extensions:
+  - html
+
+variables:
+  keyword: '\b(and|not|or|as|in|is|break|continue|elif|else|false|true|import|include|loop|set(_global)?|(?:end)?(?:block|if|for|filter|macro|raw))\b'
+  builtin: '\b(addslashes|as_str|capitalize|concat|containing|date|default|defined|divisibleby|(ending|starting)_with|escape(_xml)?|even|filesizeformat|filter|first|float|get(_env|_random)?|group_by|int|iterable|join|json_encode|last|length|lower|map|matching|now|nth|number|object|odd|pluralize|range|replace|reverse|round|safe|slice|slugify|sort|split|stri(ng|ptags)|throw|title|trim(_end(_matches)?|start(_matches)?)?|truncate|undefined|unique|urlencode(_strict)?|wordcount)\b'
+
+contexts:
+  main:
+    - match: ''
+      push: 'Packages/User/Tera/HTMLite.sublime-syntax'
+      with_prototype:
+        - include: Comment
+        - include: Expression
+        - include: Statement
+
+  Comment:
+    - match: '{#'
+      scope: punctuation.definition.comment.begin.tera
+      push:
+        - meta_scope: comment.block.tera
+        - match: '#}'
+          scope: punctuation.definition.comment.end.tera
+          pop: true
+
+  Expression:
+    - match: '{{'
+      scope: punctuation.definition.tag.tera
+      push:
+        - meta_scope: meta.expression.tera
+        - include: Pipe
+        - include: String
+        - match: '~'
+          scope: keyword.operator.concatenaton.tera
+        - match: '}}'
+          scope: punctuation.definition.tag.tera
+          pop: true
+
+  Statement:
+    - match: '{%-?'
+      scope: punctuation.definition.tag.tera
+      push:
+        - meta_scope: meta.statement.tera
+        - include: String
+        - match: '{{keyword}}'
+          scope: keyword.language.tera
+        - match: '-?%}'
+          scope: punctuation.definition.tag.tera
+          pop: true
+
+  Pipe:
+    - match: '\|'
+      scope: keyword.operator.pipe.tera
+      push:
+        - match: '\s*{{builtin}}'
+          scope: entity.name.builtin.tera
+        - match: \s*\b\w+\b
+          scope: entity.other.builtin.tera
+        - match: \s+
+          pop: true
+
+  String:
+    - include: StringDouble
+    - include: StringSingle
+    - include: StringAlt
+
+  StringDouble:
+    - match: \"
+      scope: punctuation.string.double.begin.tera
+      push:
+      - meta_scope: string.quoted.double.tera
+      - include: variable
+      - include: StringEscaped
+      - match: \"
+        scope: punctuation.string.double.end.tera
+        pop: true
+
+  StringSingle:
+    - match: \'
+      scope: punctuation.string.single.begin.tera
+      push:
+      - meta_scope: string.quoted.single.tera
+      - include: StringEscaped
+      - match: \'
+        scope: punctuation.string.single.end.tera
+        pop: true
+
+  StringAlt:
+    - match: '`'
+      scope: punctuation.string.alt.begin.tera
+      push:
+      - meta_scope: string.quoted.tera
+      - match: '`'
+        scope: punctuation.string.alt.end.tera
+        pop: true

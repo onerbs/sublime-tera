@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+name: HTMLite
+scope: text.html.lite
+contexts:
+  main:
+    - match: '(<[/!]?)(?:(doctype|DOCTYPE)|(\w+))?'
+      captures:
+        1: punctuation.definition.tag.begin.html
+        2: keyword.declaration.doctype.html
+        3: entity.name.tag.html
+      push:
+        - meta_scope: meta.tag.html
+        - include: String
+        - match: \bhtml\b
+          scope: constant.language.doctype.html
+        - match: '='
+          scope: keyword.operator.assignment.html
+        - match: \w+
+          scope: entity.other.attribute-name.html
+        - match: '>'
+          scope: punctuation.definition.tag.end.html
+          pop: true
+
+  String:
+    - match: \"
+      scope: punctuation.string.begin.html
+      push:
+      - meta_scope: string.quoted.html
+      - include: variable
+      - include: StringEscaped
+      - match: \"
+        scope: punctuation.string.end.html
+        pop: true
