@@ -62,6 +62,18 @@ contexts:
           scope: punctuation.definition.tag.tera
           pop: true
 
+  Params:
+    - match: \(
+      scope: punctuation.definition.params.begin.tera
+      push:
+        - match: '\d+(\.\d+)*'
+          scope: constant.numeric.tera
+        - match: '='
+          scope: keyword.operator.association.tera
+        - match: \)
+          scope: punctuation.definition.params.end.tera
+          pop: true
+
   Pipe:
     - match: '\|'
       scope: keyword.operator.pipe.tera
@@ -70,6 +82,7 @@ contexts:
           scope: entity.name.builtin.tera
         - match: \s*\b\w+\b
           scope: entity.other.builtin.tera
+        - include: Params
         - match: \s+
           pop: true
 
