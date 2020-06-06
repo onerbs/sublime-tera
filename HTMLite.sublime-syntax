@@ -16,7 +16,7 @@ contexts:
           scope: constant.language.doctype.html
         - match: '='
           scope: keyword.operator.assignment.html
-        - match: \w+
+        - match: '[@\w\-\.]+'
           scope: entity.other.attribute-name.html
         - match: '/?>'
           scope: punctuation.definition.tag.end.html
