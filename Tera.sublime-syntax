@@ -30,18 +30,17 @@ contexts:
 
   Comment__HTML:
     - match: '<!\-\-'
-      scope: punctuation.definition.comment.block.begin.html
+      scope: punctuation.definition.comment.begin.html
       push:
         - meta_scope: comment.block.html
         - match: '\-\->'
-          scope: punctuation.definition.comment.block.end.html
+          scope: punctuation.definition.comment.end.html
           pop: true
 
   Expression:
     - match: '{{'
       scope: punctuation.definition.tag.tera
       push:
-        - meta_scope: meta.expression.tera
         - include: Pipe
         - include: String
         - match: '~'
@@ -54,7 +53,6 @@ contexts:
     - match: '{%-?'
       scope: punctuation.definition.tag.tera
       push:
-        - meta_scope: meta.statement.tera
         - include: String
         - match: '{{keyword}}'
           scope: keyword.language.tera
