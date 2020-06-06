@@ -19,12 +19,22 @@ contexts:
         - include: Statement
 
   Comment:
+    - include: Comment__HTML
     - match: '{#'
       scope: punctuation.definition.comment.begin.tera
       push:
         - meta_scope: comment.block.tera
         - match: '#}'
           scope: punctuation.definition.comment.end.tera
+          pop: true
+
+  Comment__HTML:
+    - match: '<!\-\-'
+      scope: punctuation.definition.comment.block.begin.html
+      push:
+        - meta_scope: comment.block.html
+        - match: '\-\->'
+          scope: punctuation.definition.comment.block.end.html
           pop: true
 
   Expression:
